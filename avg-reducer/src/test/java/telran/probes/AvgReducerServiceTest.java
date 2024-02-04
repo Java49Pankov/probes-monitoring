@@ -47,6 +47,7 @@ class AvgReducerServiceTest {
 	void setUp() {
 		VALUES_NO_AVG = PROBES_LIST_NO_AVG.getValues();
 		VALUES_AVG = PROBES_LIST_AVG.getValues();
+		VALUES_AVG.clear();
 		VALUES_AVG.add(VALUE);
 		mapRedis.put(SENSOR_ID_NO_AVG, PROBES_LIST_NO_AVG);
 		mapRedis.put(SENSOR_ID_AVG, PROBES_LIST_AVG);
@@ -73,12 +74,38 @@ class AvgReducerServiceTest {
 
 	@Test
 	void noAvgValueTest() {
-		// TODO
+		when(probesListRepo.findById(SENSOR_ID_NO_AVG)).thenReturn(Optional.of(PROBES_LIST_NO_AVG));
+		when(probesListRepo.save(PROBES_LIST_NO_AVG)).thenAnswer(new Answer<ProbesList>() {
+
+			@Override
+			public ProbesList answer(InvocationOnMock invocation) throws Throwable {
+				mapRedis.put(SENSOR_ID_NO_AVG, invocation.getArgument(0));
+				return invocation.getArgument(0);
+			}
+		});
+		Long res = avgValueService.getAvgValue(PROBE_NO_AVG);
+		assertNull(res);
+		ProbesList probesList = mapRedis.get(SENSOR_ID_NO_AVG);
+		assertNotNull(probesList);
+		assertEquals(VALUE, probesList.getValues().get(0));
 	}
 
 	@Test
 	void avgValueTest() {
-		// TODO
+		when(probesListRepo.findById(SENSOR_ID_AVG)).thenReturn(Optional.of(PROBES_LIST_AVG));
+		when(probesListRepo.save(PROBES_LIST_AVG)).thenAnswer(new Answer<ProbesList>() {
+
+			@Override
+			public ProbesList answer(InvocationOnMock invocation) throws Throwable {
+				mapRedis.put(SENSOR_ID_AVG, invocation.getArgument(0));
+				return invocation.getArgument(0);
+			}
+		});
+		Long res = avgValueService.getAvgValue(PROBE_AVG);
+		assertEquals(VALUE, res.floatValue());
+		ProbesList probesList = mapRedis.get(SENSOR_ID_AVG);
+		assertNotNull(probesList);
+		assertTrue(probesList.getValues().isEmpty());
 	}
 
 }
