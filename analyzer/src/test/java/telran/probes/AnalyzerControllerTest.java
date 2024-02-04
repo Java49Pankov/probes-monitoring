@@ -3,9 +3,10 @@ package telran.probes;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
+import java.util.function.Consumer;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Producer;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.cloud.stream.binder.test.*;
@@ -38,6 +39,8 @@ class AnalyzerControllerTest {
 	private static final ProbeData probeData = new ProbeData(SENSOR_ID, VALUE, 0);
 	private static final ProbeDataDeviation dataMinDeviation = new ProbeDataDeviation(SENSOR_ID, VALUE,
 			VALUE - MIN_VALUE_DEVIATION, 0);
+	private static final ProbeDataDeviation dataMaxDeviation = new ProbeDataDeviation(SENSOR_ID, VALUE,
+			VALUE - MAX_VALUE_DEVIATION, 0);
 	@Autowired
 	InputDestination producer;
 	@Autowired
@@ -45,7 +48,9 @@ class AnalyzerControllerTest {
 
 	String bindingNameProducer = "deviation-out-0";
 	String bindingNameConsumer = "consumerProbeData-in-0";
-
+	
+	@MockBean
+	Consumer<String> configChangeConsumer;
 	@MockBean
 	SensorRangeProviderService providerService;
 
@@ -72,6 +77,18 @@ class AnalyzerControllerTest {
 
 		ProbeDataDeviation actual = mapper.readValue(message.getPayload(), ProbeDataDeviation.class);
 		assertEquals(dataMinDeviation, actual);
+	}
+	
+	@Test
+	void maxDeviationTest() throws Exception {
+		when(providerService.getSensorRange(SENSOR_ID))
+				.thenReturn(SENSOR_RANGE_MAX_DEVIATION);
+		producer.send(new GenericMessage<ProbeData>(probeData), bindingNameConsumer);
 
+		Message<byte[]> message = consumer.receive(10, bindingNameProducer);
+		assertNotNull(message);
+
+		ProbeDataDeviation actual = mapper.readValue(message.getPayload(), ProbeDataDeviation.class);
+		assertEquals(dataMaxDeviation, actual);
 	}
 }

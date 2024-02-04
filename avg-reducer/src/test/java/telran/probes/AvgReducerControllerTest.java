@@ -29,6 +29,7 @@ class AvgReducerControllerTest {
 	OutputDestination consumer;
 	@MockBean
 	AvgValueService avgService;
+	
 	@Value("${app.avg.binding.name}")
 	String producerBindingName;
 	String consumerBindingName = "probeConsumerAvg-in-0";

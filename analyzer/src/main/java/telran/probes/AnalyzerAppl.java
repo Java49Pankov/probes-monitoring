@@ -37,7 +37,7 @@ public class AnalyzerAppl {
 		long sensorId = probeData.sensorId();
 		SensorRange range = providerService.getSensorRange(sensorId);
 		float value = probeData.value();
-		int border = 0;
+		float border = 0;
 		if (value < range.minValue()) {
 			border = range.minValue();
 		} else if (value > range.maxValue()) {
@@ -46,8 +46,8 @@ public class AnalyzerAppl {
 		if (border != 0) {
 			float deviation = value - border;
 			log.debug("deviation: {}", deviation);
-			ProbeDataDeviation dataDeviation = 
-					new ProbeDataDeviation(sensorId, value, deviation, System.currentTimeMillis());
+			ProbeDataDeviation dataDeviation = new ProbeDataDeviation(sensorId, value, deviation,
+					System.currentTimeMillis());
 			streamBridge.send(deviationBindingName, dataDeviation);
 			log.debug("deviation data {} sent to {}", dataDeviation, deviationBindingName);
 		}
