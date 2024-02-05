@@ -19,16 +19,14 @@ import telran.probes.dto.SensorRange;
 @RequiredArgsConstructor
 @Slf4j
 public class SensorRangeProviderServiceImpl implements SensorRangeProviderService {
-	@Value("${app.update.message.delimeter:#}")
-	String delimeter;
-	@Value("${app.update.token.range:range-update}")
-	String rangeUpdateToken;
-
-	final SensorRangeProviderConfiguration providerConfiguration;
-	final RestTemplate restTemplate;
-
 	@Getter
 	HashMap<Long, SensorRange> mapRanges = new HashMap<>();
+	@Value("${app.update.message.delimiter:#}")
+	String delimiter;
+	@Value("${app.update.token.range:range-update}")
+	String rangeUpdateToken;
+	final SensorRangeProviderConfiguration providerConfiguration;
+	final RestTemplate restTemplate;
 
 	@Override
 	public SensorRange getSensorRange(long sensorId) {
@@ -42,7 +40,8 @@ public class SensorRangeProviderServiceImpl implements SensorRangeProviderServic
 	}
 
 	void checkConfigurationUpdate(String message) {
-		String[] tokens = message.split(delimeter);
+
+		String[] tokens = message.split(delimiter);
 		if (tokens[0].equals(rangeUpdateToken)) {
 			updateMapRanges(tokens[1]);
 		}
@@ -53,35 +52,42 @@ public class SensorRangeProviderServiceImpl implements SensorRangeProviderServic
 		if (mapRanges.containsKey(id)) {
 			mapRanges.put(id, getRangeFromService(id));
 		}
+
 	}
 
-	private SensorRange getRangeFromService(long sensorId) {
-		SensorRange result = null;
+	private SensorRange getRangeFromService(long id) {
+		SensorRange res = null;
 		try {
-			ResponseEntity<SensorRange> responseEntity = restTemplate
-					.exchange(getFullUrl(sensorId), HttpMethod.GET, null, SensorRange.class);
-			result = responseEntity.getBody();
-			mapRanges.put(sensorId, result);
+			ResponseEntity<?> responseEntity = restTemplate.exchange(getFullUrl(id), HttpMethod.GET, null,
+					SensorRange.class);
+			if (!responseEntity.getStatusCode().is2xxSuccessful()) {
+				throw new Exception((String) responseEntity.getBody());
+			}
+			res = (SensorRange) responseEntity.getBody();
+			mapRanges.put(id, res);
 		} catch (Exception e) {
-			log.error("no sensor range provided for sensor {} reason: {}", sensorId, e.getMessage());
-			result = getDefaultRange();
-			log.warn("Taken default range {} - {}", result.minValue(), result.maxValue());
+			log.error("no sensor range provided for sensor {}, reason: {}",
+					id, e.getMessage());
+			res = getDefaultRange();
+			log.warn("Taken default range {} - {}", res.minValue(), res.maxValue());
 		}
-		log.debug("Range for sensor {} is {}", sensorId, result);
-		return result;
+		log.debug("Range for sensor {} is {}", id, res);
+		return res;
+	}
+
+	private SensorRange getDefaultRange() {
+		return new SensorRange(providerConfiguration.getMinDefaultValue(),
+				providerConfiguration.getMaxDefaultValue());
 	}
 
 	private String getFullUrl(long id) {
-		String result = String.format("http://%s:%d%s/%d",
+		String res = String.format("http://%s:%d%s/%d",
 				providerConfiguration.getHost(),
 				providerConfiguration.getPort(),
 				providerConfiguration.getUrl(),
 				id);
-		log.debug("url: {}", result);
-		return result;
+		log.debug("url:{}", res);
+		return res;
 	}
 
-	private SensorRange getDefaultRange() {
-		return new SensorRange(providerConfiguration.getMinDefaultValue(), providerConfiguration.getMaxDefaultValue());
-	}
 }
