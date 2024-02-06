@@ -40,8 +40,8 @@ class AnalyzerServiceTest {
 	private static final long SENSOR_ID_UNAVAILABLE = 125l;
 	private static final SensorRange SENSOR_RANGE_UPDATED = new SensorRange(MIN_VALUE + 10,
 			MAX_VALUE + 10);
-	private static final String URL = "http://localhost:8282/sensor/range/";
 	
+	private static final String URL = "http://localhost:8282/sensor/range/";
 	@Value("${app.sensor.range.provider.default.min}")
 	float minDefaultValue;
 	@Value("${app.sensor.range.provider.default.max}")
@@ -120,7 +120,7 @@ class AnalyzerServiceTest {
 		ResponseEntity<SensorRange> responseEntity = new ResponseEntity<SensorRange>(SENSOR_RANGE, HttpStatus.OK);
 		when(restTemplate.exchange(anyString(), any(HttpMethod.class), any(),
 				any(Class.class))).thenReturn(responseEntity);
-		mockRemoteServideRequest(SENSOR_RANGE, HttpStatus.OK, SENSOR_ID_UNAVAILABLE);
+		mockRemoteServiceRequest(SENSOR_RANGE, HttpStatus.OK, SENSOR_ID_UNAVAILABLE);
 		actual = providerService.getSensorRange(SENSOR_ID_UNAVAILABLE);
 		assertEquals(SENSOR_RANGE, actual);
 	}
@@ -130,7 +130,7 @@ class AnalyzerServiceTest {
 	void sensorInMapUpdated() {
 		// test case: In the case a sensor existing in the map has been updated
 		// there must be remote service call with following updating map
-		mockRemoteServideRequest(SENSOR_RANGE_UPDATED, HttpStatus.OK, SENSOR_ID);
+		mockRemoteServiceRequest(SENSOR_RANGE_UPDATED, HttpStatus.OK, SENSOR_ID);
 		producer.send(new GenericMessage<String>(String.format("%s%s%d",
 				rangeUpdateToken, delimiter, SENSOR_ID)), consumerBindingName);
 		SensorRange actual = providerService.getSensorRange(SENSOR_ID);
@@ -159,7 +159,7 @@ class AnalyzerServiceTest {
 
 	}
 
-	private void mockRemoteServideRequest(SensorRange sensorRange, HttpStatus status,
+	private void mockRemoteServiceRequest(SensorRange sensorRange, HttpStatus status,
 			long sensorId) {
 		ResponseEntity<SensorRange> responseEntity = new ResponseEntity<SensorRange>(sensorRange, status);
 		when(restTemplate.exchange(URL + sensorId,
