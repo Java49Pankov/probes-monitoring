@@ -40,7 +40,6 @@ public class SensorRangeProviderServiceImpl implements SensorRangeProviderServic
 	}
 
 	void checkConfigurationUpdate(String message) {
-
 		String[] tokens = message.split(delimiter);
 		if (tokens[0].equals(rangeUpdateToken)) {
 			updateMapRanges(tokens[1]);
@@ -52,7 +51,6 @@ public class SensorRangeProviderServiceImpl implements SensorRangeProviderServic
 		if (mapRanges.containsKey(id)) {
 			mapRanges.put(id, getRangeFromService(id));
 		}
-
 	}
 
 	private SensorRange getRangeFromService(long id) {
