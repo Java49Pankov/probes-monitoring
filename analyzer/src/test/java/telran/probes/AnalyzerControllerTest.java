@@ -24,10 +24,10 @@ import telran.probes.service.SensorRangeProviderService;
 @Import(TestChannelBinderConfiguration.class)
 class AnalyzerControllerTest {
 	private static final long SENSOR_ID = 123l;
-	private static final int MIN_VALUE_NO_DEVIATION = 10;
-	private static final int MAX_VALUE_NO_DEVIATION = 100;
-	private static final int MIN_VALUE_DEVIATION = 60;
-	private static final int MAX_VALUE_DEVIATION = 40;
+	private static final float MIN_VALUE_NO_DEVIATION = 10;
+	private static final float MAX_VALUE_NO_DEVIATION = 100;
+	private static final float MIN_VALUE_DEVIATION = 60;
+	private static final float MAX_VALUE_DEVIATION = 40;
 	private static final float VALUE = 50f;
 
 	private static final SensorRange SENSOR_RANGE_NO_DEVIATION = new SensorRange(MIN_VALUE_NO_DEVIATION,
@@ -48,7 +48,7 @@ class AnalyzerControllerTest {
 
 	String bindingNameProducer = "deviation-out-0";
 	String bindingNameConsumer = "consumerProbeData-in-0";
-	
+
 	@MockBean
 	Consumer<String> configChangeConsumer;
 	@MockBean
@@ -78,7 +78,7 @@ class AnalyzerControllerTest {
 		ProbeDataDeviation actual = mapper.readValue(message.getPayload(), ProbeDataDeviation.class);
 		assertEquals(dataMinDeviation, actual);
 	}
-	
+
 	@Test
 	void maxDeviationTest() throws Exception {
 		when(providerService.getSensorRange(SENSOR_ID))

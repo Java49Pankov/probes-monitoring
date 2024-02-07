@@ -96,5 +96,6 @@
 		<module>email-notifier</module>
 		<module>email-data-provider</module>
 		<module>sensors</module>
+		<module>admin-console</module>
 	</modules>
 </project>
