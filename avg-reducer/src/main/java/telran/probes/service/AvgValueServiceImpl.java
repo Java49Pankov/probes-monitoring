@@ -4,7 +4,6 @@ import java.util.*;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,18 +21,17 @@ public class AvgValueServiceImpl implements AvgValueService {
 	int reducingSize;
 
 	@Override
-	@Transactional
 	public Long getAvgValue(ProbeData probeData) {
 		long sensorId = probeData.sensorId();
 		Long result = null;
 		ProbesList probesList = probesListRepo.findById(sensorId).orElse(null);
-		if (probesList == null) {
+		if (probesList == null || probesList.getValues() == null) {
 			probesList = new ProbesList(sensorId);
 			log.debug("probesList for sensor {} doesn't exist", sensorId);
 		}
 		List<Float> values = probesList.getValues();
 		values.add(probeData.value());
-		if (values.size() == reducingSize) {
+		if (values.size() >= reducingSize) {
 			log.debug("reducing for sensor {}", sensorId);
 			result = (long) values
 					.stream()

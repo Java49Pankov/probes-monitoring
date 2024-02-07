@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.*;
 import telran.probes.dto.ProbeData;
 
-@Document
+@Document(collection = "avg_values")
 @ToString
 @Getter
 @NoArgsConstructor

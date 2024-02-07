@@ -2,8 +2,6 @@ package telran.probes;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,8 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.stream.binder.test.*;
 import org.springframework.context.annotation.Import;
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import telran.probes.dto.SensorEmailsDto;
 import telran.probes.dto.SensorRange;
 import telran.probes.model.SensorEmailsDoc;

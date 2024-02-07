@@ -1,6 +1,5 @@
 package telran.probes.service;
 
-import java.net.URI;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.function.Consumer;
