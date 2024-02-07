@@ -6,4 +6,10 @@
     <version>0.0.1</version>
   </parent>
   <artifactId>sensors</artifactId>
+  <dependencies>
+	  <dependency>
+		  <groupId>org.springframework.boot</groupId>
+		  <artifactId>spring-boot-starter-data-mongodb</artifactId>
+	  </dependency>
+  </dependencies>
 </project>
