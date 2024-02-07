@@ -91,5 +91,6 @@
 		<module>avg-populator</module>
 		<module>sensor-range-provider</module>
 		<module>email-notifier</module>
+		<module>email-data-provider</module>
 	</modules>
 </project>
