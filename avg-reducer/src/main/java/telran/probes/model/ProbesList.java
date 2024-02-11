@@ -9,6 +9,7 @@ import lombok.*;
 
 @RedisHash
 @Getter
+
 @ToString
 @NoArgsConstructor
 public class ProbesList {
@@ -37,7 +38,5 @@ public class ProbesList {
 		ProbesList other = (ProbesList) obj;
 		return sensorId == other.sensorId;
 	}
-	
-	
 
 }

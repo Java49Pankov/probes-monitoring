@@ -12,6 +12,7 @@ import lombok.Getter;
 public class SensorsConfiguration {
 	@Value("${app.sensors.binding.name:sensorsData-out-0}")
 	String bindingName;
+
 	@SuppressWarnings("serial")
 	HashMap<Long, SensorData> sensorsDataMap = new HashMap<>() {
 		{
@@ -20,10 +21,10 @@ public class SensorsConfiguration {
 			put(125l, new SensorData(10, 40, new String[] { "service125@gmail.com" }));
 		}
 	};
-	@Value("${app.sensors.deviation.percent:10}")
+	@Value("${app.sensors.deviation.percent: 10}")
 	int deviationPercent;
-	@Value("${app.sensors.deviation.factor:0.3}")
+	@Value("${app.sensors.deviation.factor: 0.3}")
 	float deviationFactor;
-	@Value("${app.sensors.negative.deviation.percent:50}")
+	@Value("${app.sensors.negative.deviation.percent: 50}")
 	int negativeDeviationPercent;
 }

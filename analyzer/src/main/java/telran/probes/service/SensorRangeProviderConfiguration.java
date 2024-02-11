@@ -20,8 +20,7 @@ public class SensorRangeProviderConfiguration {
 	float minDefaultValue;
 	@Value("${app.sensor.range.provider.default.max:100}")
 	float maxDefaultValue;
-	
-	
+
 	@Bean
 	RestTemplate getRestTemplate() {
 		return new RestTemplate();

@@ -20,6 +20,7 @@ public class AvgPopulatorAppl {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AvgPopulatorAppl.class, args);
+
 	}
 
 	@Bean

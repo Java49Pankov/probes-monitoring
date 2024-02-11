@@ -1,5 +1,6 @@
 package telran.probes.service;
 
+import java.net.URI;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.function.Consumer;
@@ -52,10 +53,12 @@ public class EmailDataProviderClientImpl implements EmailDataProviderClient {
 			res = getDefaultEmails();
 			log.warn("Taken default emails {}", Arrays.deepToString(res));
 		}
+
 		return res;
 	}
 
 	private String[] getDefaultEmails() {
+
 		return providerConfiguration.getEmails();
 	}
 
@@ -75,6 +78,7 @@ public class EmailDataProviderClientImpl implements EmailDataProviderClient {
 	}
 
 	void checkConfigurationUpdate(String message) {
+
 		String[] tokens = message.split(delimiter);
 		if (tokens[0].equals(emailsUpdateToken)) {
 			updateMapEmails(tokens[1]);

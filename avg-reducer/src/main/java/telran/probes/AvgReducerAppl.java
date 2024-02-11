@@ -24,6 +24,7 @@ public class AvgReducerAppl {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AvgReducerAppl.class, args);
+
 	}
 
 	@Bean

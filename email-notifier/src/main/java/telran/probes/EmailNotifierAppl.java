@@ -23,15 +23,16 @@ public class EmailNotifierAppl {
 
 	public static void main(String[] args) {
 		SpringApplication.run(EmailNotifierAppl.class, args);
+
 	}
 
 	@Bean
 	Consumer<ProbeDataDeviation> deviationConsumer() {
-		return this::deviationNotivicationSend;
+		return this::deviationNotificationSend;
 	}
 
-	void deviationNotivicationSend(ProbeDataDeviation deviationData) {
-		log.debug("recieved deviation {}", deviationData);
+	void deviationNotificationSend(ProbeDataDeviation deviationData) {
+		log.debug("received deviation {}", deviationData);
 		long sensorId = deviationData.sensorId();
 		String[] emails = providerClient.getEmails(sensorId);
 		sendMails(emails, deviationData);
@@ -45,9 +46,10 @@ public class EmailNotifierAppl {
 		smm.setText(text);
 		smm.setSubject(subject);
 		mailSender.send(smm);
-		log.debug("text: {}, subject: {}", text, subject);
-		log.debug("emails: {}", Arrays.deepToString(emails));
+		log.debug("text: {}, subject: {}", text);
+		log.debug("emails : {}", Arrays.deepToString(emails));
 		log.debug("mail sent to above emails");
+
 	}
 
 	private String getSubject(ProbeDataDeviation deviationData) {
@@ -55,6 +57,7 @@ public class EmailNotifierAppl {
 	}
 
 	private String getText(ProbeDataDeviation deviationData) {
+
 		return String.format("Sensor %d has value %f \n deviation is %f",
 				deviationData.sensorId(), deviationData.value(), deviationData.deviation());
 	}

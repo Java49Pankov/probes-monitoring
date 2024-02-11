@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import telran.probes.dto.*;
-
 import telran.probes.service.SensorRangeProviderService;
 
 @SpringBootApplication
@@ -25,18 +24,20 @@ public class AnalyzerAppl {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AnalyzerAppl.class, args);
+
 	}
 
 	@Bean
-	Consumer<ProbeData> consumerProbeData() {
+	public Consumer<ProbeData> consumerProbeData() {
 		return this::consumeMethod;
 	}
 
 	void consumeMethod(ProbeData probeData) {
-		log.trace("received probeData: {}", probeData);
+		log.trace("received probe: {}", probeData);
 		long sensorId = probeData.sensorId();
 		SensorRange range = providerService.getSensorRange(sensorId);
 		float value = probeData.value();
+
 		float border = Float.MIN_VALUE;
 		if (value < range.minValue()) {
 			border = range.minValue();
@@ -50,6 +51,8 @@ public class AnalyzerAppl {
 					System.currentTimeMillis());
 			streamBridge.send(deviationBindingName, dataDeviation);
 			log.debug("deviation data {} sent to {}", dataDeviation, deviationBindingName);
+
 		}
 	}
+
 }

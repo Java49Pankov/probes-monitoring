@@ -13,7 +13,7 @@
 	<artifactId>probes-monitoring</artifactId>
 	<version>0.0.1</version>
 	<name>probes-monitoring</name>
-	<description>template for microservices-architechure</description>
+	<description>template for microservices-architecture</description>
 	<packaging>pom</packaging>
 	<properties>
 		<java.version>17</java.version>
@@ -36,6 +36,7 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-config-client</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -99,8 +100,8 @@
 		<module>sensor-range-provider</module>
 		<module>email-notifier</module>
 		<module>email-data-provider</module>
-		<module>sensors</module>
 		<module>admin-console</module>
 		<module>config-server</module>
+		<module>sensors</module>
 	</modules>
 </project>
