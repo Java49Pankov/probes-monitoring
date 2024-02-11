@@ -21,13 +21,13 @@ public class AdminConsoleServiceImpl implements AdminConsoleService {
 	final SensorEmailsRepo sensorEmailsRepo;
 	final SensorRangesRepo sensorRangesRepo;
 	final StreamBridge streamBridge;
-	@Value("${app.sensors.update.binding.name:sensorsUpdate-out-0}")
+	@Value("${app.sensors.update.binding.name}")
 	String bindingName;
-	@Value("${app.update.token.emails:emails-update}")
+	@Value("${app.update.token.emails}")
 	String emailsUpdateToken;
-	@Value("${app.update.message.delimiter:#}")
+	@Value("${app.update.message.delimiter}")
 	String delimiter;
-	@Value("${app.update.token.range:range-update}")
+	@Value("${app.update.token.range}")
 	String rangeUpdateToken;
 
 	@Override

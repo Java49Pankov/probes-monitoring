@@ -27,7 +27,7 @@ public class AvgValueServiceImpl implements AvgValueService {
 		ProbesList probesList = probesListRepo.findById(sensorId).orElse(null);
 		if (probesList == null || probesList.getValues() == null) {
 			probesList = new ProbesList(sensorId);
-			log.debug("probesList for sensor {} doesn't exist", sensorId);
+			log.debug("probesList for sensor {} doesn't exist or no values", sensorId);
 		}
 		List<Float> values = probesList.getValues();
 		values.add(probeData.value());

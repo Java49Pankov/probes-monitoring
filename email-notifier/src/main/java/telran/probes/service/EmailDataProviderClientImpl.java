@@ -22,9 +22,9 @@ import telran.probes.configuration.EmailsProviderConfiguration;
 public class EmailDataProviderClientImpl implements EmailDataProviderClient {
 	@Getter
 	HashMap<Long, String[]> mapEmails = new HashMap<>();
-	@Value("${app.update.message.delimiter:#}")
+	@Value("${app.update.message.delimiter}")
 	String delimiter;
-	@Value("${app.update.token.emails:emails-update}")
+	@Value("${app.update.token.emails}")
 	String emailsUpdateToken;
 	final EmailsProviderConfiguration providerConfiguration;
 	final RestTemplate restTemplate;

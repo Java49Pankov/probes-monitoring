@@ -10,13 +10,13 @@ import lombok.Getter;
 @Configuration
 @Getter
 public class EmailsProviderConfiguration {
-	@Value("${app.emails.provider.host:localhost}")
+	@Value("${app.emails.provider.host}")
 	String host;
-	@Value("${app.emails.provider.port:8484}")
+	@Value("${app.emails.provider.port}")
 	int port;
-	@Value("${app.emails.provider.url:/emails}")
+	@Value("${app.emails.provider.url}")
 	String url;
-	@Value("${app.emails.provider.default:sensors.service@gmail.com}")
+	@Value("${app.emails.provider.default}")
 	String[] emails;
 
 	@Bean
