@@ -17,11 +17,11 @@ import java.util.*;
 @RequiredArgsConstructor
 public class AvgValueServiceImpl implements AvgValueService {
 	final ProbesListRepo probesListRepo;
+
 	@Value("${app.average.reducing.size}")
 	int reducingSize;
 
 	@Override
-
 	public Long getAvgValue(ProbeData probeData) {
 		long sensorId = probeData.sensorId();
 		Long res = null;
@@ -36,14 +36,14 @@ public class AvgValueServiceImpl implements AvgValueService {
 		values.add(probeData.value());
 		if (values.size() >= reducingSize) {
 			log.debug("reducing for sensor {}", sensorId);
-			res = (long) values.stream().mapToLong(v -> v.longValue()).average().orElse(0);
+			res = (long) values.stream()
+					.mapToLong(v -> v.longValue())
+					.average()
+					.orElse(0);
 			values.clear();
-
 		}
-
 		probesListRepo.save(probesList);
 		log.debug("saved probesList {}", probesList);
-
 		return res;
 	}
 

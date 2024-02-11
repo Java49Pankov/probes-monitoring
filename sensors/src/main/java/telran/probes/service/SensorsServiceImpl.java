@@ -21,7 +21,9 @@ public class SensorsServiceImpl implements SensorsService {
 	@Override
 	public ProbeData getRandomProbeData() {
 		Map<Long, SensorData> sensorsMap = sensorsConfiguration.getSensorsDataMap();
-		long[] sensorIds = sensorsMap.keySet().stream().mapToLong(id -> id).toArray();
+		long[] sensorIds = sensorsMap.keySet().stream()
+				.mapToLong(id -> id)
+				.toArray();
 		long id = getRandomId(sensorIds);
 		SensorData sensorData = sensorsMap.get(id);
 		SensorRange range = new SensorRange(sensorData.minValue(), sensorData.maxValue());
@@ -38,32 +40,27 @@ public class SensorsServiceImpl implements SensorsService {
 	}
 
 	private float getRandomNormalValue(SensorRange range) {
-
 		return ThreadLocalRandom.current().nextFloat(range.minValue(), range.maxValue());
 	}
 
 	private float getRandomDeviation(SensorRange range) {
-
 		return getRandomInt(1, 100) < sensorsConfiguration.getNegativeDeviationPercent() ? getLessMin(range.minValue())
 				: getGreaterMax(range.maxValue());
 	}
 
 	private float getGreaterMax(float maxValue) {
-
 		float res = maxValue + Math.abs(maxValue * sensorsConfiguration.getDeviationFactor());
 		log.debug("positive deviation - maxValue: {}, new value: {}", maxValue, res);
 		return res;
 	}
 
 	private float getLessMin(float minValue) {
-
 		float res = minValue - Math.abs(minValue * sensorsConfiguration.getDeviationFactor());
 		log.debug("negative deviation - minValue: {}, new value: {}", minValue, res);
 		return res;
 	}
 
 	private int getRandomInt(int min, int max) {
-
 		return ThreadLocalRandom.current().nextInt(min, max);
 	}
 

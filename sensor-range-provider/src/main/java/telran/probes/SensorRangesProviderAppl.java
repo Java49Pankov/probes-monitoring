@@ -10,7 +10,6 @@ public class SensorRangesProviderAppl {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SensorRangesProviderAppl.class, args);
-
 	}
 
 }

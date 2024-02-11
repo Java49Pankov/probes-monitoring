@@ -23,6 +23,7 @@ import telran.probes.service.SensorsService;
 
 public class SensorsAppl {
 	public static final long TIMEOUT = 10000;
+	
 	final SensorsService sensorService;
 	final StreamBridge streamBridge;
 	final SensorsConfiguration sensorsConfiguration;

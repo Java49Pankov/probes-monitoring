@@ -39,17 +39,16 @@ public class SensorsDataPopulation {
 
 	private void populateRanges(Map<Long, SensorData> sensorDataMap) {
 		List<SensorRangeDoc> documents = sensorDataMap.entrySet().stream()
-				.map(e -> new SensorRangeDoc(e.getKey(), e.getValue().minValue(),
-						e.getValue().maxValue()))
+				.map(e -> new SensorRangeDoc(e.getKey(), e.getValue().minValue(), e.getValue().maxValue()))
 				.toList();
 		sensorRangeRepo.saveAll(documents);
 		log.debug("{} has been saved", documents.size());
-
 	}
 
 	private void populateEmails(Map<Long, SensorData> sensorDataMap) {
 		List<SensorEmailsDoc> documents = sensorDataMap.entrySet().stream()
-				.map(e -> new SensorEmailsDoc(e.getKey(), e.getValue().emails())).toList();
+				.map(e -> new SensorEmailsDoc(e.getKey(), e.getValue().emails()))
+				.toList();
 		sensorEmailsRepo.saveAll(documents);
 		log.debug("{} has been saved", documents.size());
 

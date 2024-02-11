@@ -10,7 +10,6 @@ public class EmailDataProviderAppl {
 
 	public static void main(String[] args) {
 		SpringApplication.run(EmailDataProviderAppl.class, args);
-
 	}
 
 }

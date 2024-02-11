@@ -24,7 +24,6 @@ public class AnalyzerAppl {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AnalyzerAppl.class, args);
-
 	}
 
 	@Bean
@@ -37,7 +36,6 @@ public class AnalyzerAppl {
 		long sensorId = probeData.sensorId();
 		SensorRange range = providerService.getSensorRange(sensorId);
 		float value = probeData.value();
-
 		float border = Float.MIN_VALUE;
 		if (value < range.minValue()) {
 			border = range.minValue();
@@ -51,7 +49,6 @@ public class AnalyzerAppl {
 					System.currentTimeMillis());
 			streamBridge.send(deviationBindingName, dataDeviation);
 			log.debug("deviation data {} sent to {}", dataDeviation, deviationBindingName);
-
 		}
 	}
 

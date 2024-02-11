@@ -19,12 +19,12 @@ import telran.probes.service.AvgValueService;
 public class AvgReducerAppl {
 	final AvgValueService service;
 	final StreamBridge streamBridge;
+
 	@Value("${app.avg.binding.name}")
 	String bindingName;
 
 	public static void main(String[] args) {
 		SpringApplication.run(AvgReducerAppl.class, args);
-
 	}
 
 	@Bean
@@ -42,7 +42,6 @@ public class AvgReducerAppl {
 		} else {
 			log.trace("for sensor {} no avg value yet", sensorId);
 		}
-
 	}
 
 }

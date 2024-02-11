@@ -23,7 +23,6 @@ public class EmailNotifierAppl {
 
 	public static void main(String[] args) {
 		SpringApplication.run(EmailNotifierAppl.class, args);
-
 	}
 
 	@Bean
@@ -57,7 +56,6 @@ public class EmailNotifierAppl {
 	}
 
 	private String getText(ProbeDataDeviation deviationData) {
-
 		return String.format("Sensor %d has value %f \n deviation is %f",
 				deviationData.sensorId(), deviationData.value(), deviationData.deviation());
 	}

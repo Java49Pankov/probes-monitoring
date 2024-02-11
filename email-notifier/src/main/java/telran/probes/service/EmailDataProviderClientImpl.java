@@ -27,6 +27,7 @@ public class EmailDataProviderClientImpl implements EmailDataProviderClient {
 	String delimiter;
 	@Value("${app.update.token.emails}")
 	String emailsUpdateToken;
+
 	final EmailsProviderConfiguration providerConfiguration;
 	final RestTemplate restTemplate;
 
@@ -48,8 +49,7 @@ public class EmailDataProviderClientImpl implements EmailDataProviderClient {
 			mapEmails.put(sensorId, res);
 			log.debug("emails for sensor {} are {}", sensorId, Arrays.deepToString(res));
 		} catch (Exception e) {
-			log.error("no email address provided for sensor {}, reason: {}",
-					sensorId, e.getMessage());
+			log.error("no email address provided for sensor {}, reason: {}", sensorId, e.getMessage());
 			res = getDefaultEmails();
 			log.warn("Taken default emails {}", Arrays.deepToString(res));
 		}
@@ -58,7 +58,6 @@ public class EmailDataProviderClientImpl implements EmailDataProviderClient {
 	}
 
 	private String[] getDefaultEmails() {
-
 		return providerConfiguration.getEmails();
 	}
 
@@ -78,7 +77,6 @@ public class EmailDataProviderClientImpl implements EmailDataProviderClient {
 	}
 
 	void checkConfigurationUpdate(String message) {
-
 		String[] tokens = message.split(delimiter);
 		if (tokens[0].equals(emailsUpdateToken)) {
 			updateMapEmails(tokens[1]);
@@ -90,7 +88,6 @@ public class EmailDataProviderClientImpl implements EmailDataProviderClient {
 		if (mapEmails.containsKey(id)) {
 			getEmailsFromRemoteService(id);
 		}
-
 	}
 
 }

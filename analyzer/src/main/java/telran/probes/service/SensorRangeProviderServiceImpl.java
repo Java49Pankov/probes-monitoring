@@ -25,13 +25,13 @@ public class SensorRangeProviderServiceImpl implements SensorRangeProviderServic
 	String delimiter;
 	@Value("${app.update.token.range:range-update}")
 	String rangeUpdateToken;
+
 	final SensorRangeProviderConfiguration providerConfiguration;
 	final RestTemplate restTemplate;
 
 	@Override
 	public SensorRange getSensorRange(long sensorId) {
 		SensorRange range = mapRanges.get(sensorId);
-
 		return range == null ? getRangeFromService(sensorId) : range;
 	}
 
@@ -41,7 +41,6 @@ public class SensorRangeProviderServiceImpl implements SensorRangeProviderServic
 	}
 
 	void checkConfigurationUpdate(String message) {
-
 		String[] tokens = message.split(delimiter);
 		if (tokens[0].equals(rangeUpdateToken)) {
 			updateMapRanges(tokens[1]);
@@ -59,16 +58,15 @@ public class SensorRangeProviderServiceImpl implements SensorRangeProviderServic
 	private SensorRange getRangeFromService(long id) {
 		SensorRange res = null;
 		try {
-			ResponseEntity<?> responseEntity = restTemplate.exchange(getFullUrl(id), HttpMethod.GET, null,
-					SensorRange.class);
+			ResponseEntity<?> responseEntity = restTemplate
+					.exchange(getFullUrl(id), HttpMethod.GET, null, SensorRange.class);
 			if (!responseEntity.getStatusCode().is2xxSuccessful()) {
 				throw new Exception((String) responseEntity.getBody());
 			}
 			res = (SensorRange) responseEntity.getBody();
 			mapRanges.put(id, res);
 		} catch (Exception e) {
-			log.error("no sensor range provided for sensor {}, reason: {}",
-					id, e.getMessage());
+			log.error("no sensor range provided for sensor {}, reason: {}", id, e.getMessage());
 			res = getDefaultRange();
 			log.warn("Taken default range {} - {}", res.minValue(), res.maxValue());
 		}
@@ -77,7 +75,6 @@ public class SensorRangeProviderServiceImpl implements SensorRangeProviderServic
 	}
 
 	private SensorRange getDefaultRange() {
-
 		return new SensorRange(providerConfiguration.getMinDefaultValue(),
 				providerConfiguration.getMaxDefaultValue());
 	}
