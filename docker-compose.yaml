@@ -1,0 +1,109 @@
+version: "3"
+services:
+  config-server:
+    build:
+      config-server #path with Dockerfile for config-server
+    deploy: 
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 300M
+        reservations:
+          cpus: '0.3'
+          memory: 200M
+  analyzer:
+    build:
+      analyzer #path with Dockerfile for analyzer
+    deploy: 
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 300M
+        reservations:
+          cpus: '0.3'
+          memory: 200M
+    environment:
+      - CONFLUENT_API_SECRET=${CONFLUENT_API_SECRET}
+  avg-populator:
+    build:
+      avg-populator #path with Dockerfile for avg-populator
+    deploy: 
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 300M
+        reservations:
+          cpus: '0.3'
+          memory: 200M
+    environment:
+      - CONFLUENT_API_SECRET=${CONFLUENT_API_SECRET}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}  
+  avg-reducer:
+    build:
+      avg-reducer #path with Dockerfile for avg-reducer
+    deploy: 
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 300M
+        reservations:
+          cpus: '0.3'
+          memory: 200M
+    environment:
+      - CONFLUENT_API_SECRET=${CONFLUENT_API_SECRET}
+      - REDIS_PASSWORD=${REDIS_PASSWORD} 
+  email-data-provider:
+    build:
+      email-data-provider #path with Dockerfile for email-data-provider
+    deploy: 
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 300M
+        reservations:
+          cpus: '0.3'
+          memory: 200M
+    environment:
+      - MONGO_PASSWORD=${MONGO_PASSWORD} 
+  email-notifier:
+    build:
+      email-notifier #path with Dockerfile for email-notifier
+    deploy: 
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 300M
+        reservations:
+          cpus: '0.3'
+          memory: 200M
+    environment:
+      - CONFLUENT_API_SECRET=${CONFLUENT_API_SECRET} 
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+  sensor-range-provider:
+    build:
+      sensor-range-provider #path with Dockerfile for sensor-range-provider
+    deploy: 
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 300M
+        reservations:
+          cpus: '0.3'
+          memory: 200M
+    environment:
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+  admin-console:
+    build:
+      admin-console #path with Dockerfile for admin-console
+    deploy: 
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 300M
+        reservations:
+          cpus: '0.3'
+          memory: 200M
+    environment:
+      - CONFLUENT_API_SECRET=${CONFLUENT_API_SECRET}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}    
+   
