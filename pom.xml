@@ -103,5 +103,6 @@
 		<module>admin-console</module>
 		<module>config-server</module>
 		<module>sensors</module>
+		<module>account-provider</module>
 	</modules>
 </project>

@@ -2,7 +2,7 @@ version: "3"
 services:
   config-server:
     build:
-      config-server #path with Dockerfile for config-server
+      ./config-server #path with Dockerfile for config-server
     deploy: 
       resources:
         limits:
