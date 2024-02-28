@@ -114,4 +114,20 @@ services:
       - MONGO_PASSWORD=${MONGO_PASSWORD}    
     ports:
       - 8484:8484
+  account-provider:
+    build:
+      account-provider #path with Dockerfile for account-provider
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 300M
+        reservations:
+          cpus: '0.3'
+          memory: 200M
+    environment:
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+    ports:
+      - 8989:8989 
+      
    

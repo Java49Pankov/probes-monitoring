@@ -40,7 +40,7 @@ class AnalyzerServiceTest {
 	private static final long SENSOR_ID_UNAVAILABLE = 125l;
 	private static final SensorRange SENSOR_RANGE_UPDATED = new SensorRange(MIN_VALUE + 10,
 			MAX_VALUE + 10);
-	
+
 	private static final String URL = "http://localhost:8282/sensor/range/";
 	@Value("${app.sensor.range.provider.default.min}")
 	float minDefaultValue;
@@ -57,7 +57,8 @@ class AnalyzerServiceTest {
 	SensorRangeProviderService providerService;
 	@MockBean
 	RestTemplate restTemplate;
-	String consumerBindingName = "configChangeConsumer-in-0";
+	@Value("${app.sensors.update.binding.name}")
+	String consumerBindingName;
 
 	@Test
 	void testNotNull() {

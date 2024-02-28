@@ -13,7 +13,7 @@ import telran.security.accounting.dto.AccountDto;
 public class AccountProviderController {
 	final AccountProviderService accountingService;
 
-	@GetMapping("accounts/{email}")
+	@GetMapping("${app.account.provider.url:accounts}" + "/{email}")
 	AccountDto getAccount(@PathVariable String email) {
 		return accountingService.getAccount(email);
 	}
