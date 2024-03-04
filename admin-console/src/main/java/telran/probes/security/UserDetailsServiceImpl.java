@@ -32,8 +32,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		AccountDto account = getAccount(username);
 		String[] roles = Arrays.stream(account.roles())
-				.map(role -> "ROLE_" + role)
-				.toArray(String[]::new);
+				.map(role -> "ROLE_" + role).toArray(String[]::new);
 		log.debug("username: {}, password: {}, roles: {}",
 				account.email(), account.password(), Arrays.deepToString(roles));
 		return new User(account.email(), account.password(),
@@ -52,6 +51,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		} catch (Exception e) {
 			log.error("no account provided for user {}, reason: {}",
 					username, e.getMessage());
+
 		}
 		log.debug("Account for username {} is {}", username, res);
 		return res;

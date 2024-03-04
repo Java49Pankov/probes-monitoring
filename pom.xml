@@ -104,5 +104,6 @@
 		<module>config-server</module>
 		<module>sensors</module>
 		<module>account-provider</module>
+		<module>gateway</module>
 	</modules>
 </project>

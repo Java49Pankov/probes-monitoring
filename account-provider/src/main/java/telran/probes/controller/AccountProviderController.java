@@ -15,6 +15,6 @@ public class AccountProviderController {
 
 	@GetMapping("${app.account.provider.url:accounts}" + "/{email}")
 	AccountDto getAccount(@PathVariable String email) {
-		return accountingService.getAccount(email);
+		return accountingService.getAccounts(email);
 	}
 }

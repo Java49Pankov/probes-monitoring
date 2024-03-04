@@ -10,15 +10,14 @@ import telran.security.accounting.dto.AccountDto;
 import telran.security.accounting.model.Account;
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class AccountProviderServiceImpl implements AccountProviderService {
 	final AccountRepo accountRepo;
 
 	@Override
-	public AccountDto getAccount(String email) {
+	public AccountDto getAccounts(String email) {
 		Account account = accountRepo.findById(email)
-				.orElseThrow(() -> new NotFoundException(String.format("account %d not found", email)));
+				.orElseThrow(() -> new NotFoundException(String.format("account %s not found", email)));
 		return account.build();
 	}
 
