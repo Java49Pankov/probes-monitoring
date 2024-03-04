@@ -34,3 +34,4 @@ build/
 
 ###  secrets file ###
 .env
+k8s-config/secret.yaml
