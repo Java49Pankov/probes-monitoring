@@ -11,6 +11,19 @@ services:
         reservations:
           cpus: '0.3'
           memory: 200M
+  gateway:
+    build:
+      gateway #path with Dockerfile for gateway
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 300M
+        reservations:
+          cpus: '0.3'
+          memory: 200M
+    ports:
+      - 8080:8080
   analyzer:
     build:
       analyzer #path with Dockerfile for analyzer

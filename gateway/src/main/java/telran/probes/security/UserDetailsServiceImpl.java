@@ -51,7 +51,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		} catch (Exception e) {
 			log.error("no account provided for user {}, reason: {}",
 					username, e.getMessage());
-
 		}
 		log.debug("Account for username {} is {}", username, res);
 		return res;
